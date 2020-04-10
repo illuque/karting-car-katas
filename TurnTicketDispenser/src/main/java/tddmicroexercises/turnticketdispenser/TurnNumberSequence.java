@@ -1,10 +1,10 @@
 package tddmicroexercises.turnticketdispenser;
 
-public class TurnNumberSequence {
+public class TurnNumberSequence implements TurnNumberGenerator {
 
     private static int turnNumber = 0;
 
-    public int getNextTurnNumber() {
+    @Override public int getNextTurnNumber() {
         return incrementTurn();
     }
 
