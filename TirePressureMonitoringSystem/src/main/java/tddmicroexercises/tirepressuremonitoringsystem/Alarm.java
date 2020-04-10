@@ -21,6 +21,6 @@ public class Alarm
 
     public boolean isAlarmOn()
     {
-        return alarmOn; 
+        return alarmOn;
     }
 }
