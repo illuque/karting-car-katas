@@ -4,28 +4,28 @@ public class Alarm {
     static final double LOW_PRESSURE_THRESHOLD = 17;
     static final double HIGH_PRESSURE_THRESHOLD = 21;
 
-    private Sensor sensor;
+    private PsiChecker psiChecker;
 
     private boolean switchedOn;
 
-    Alarm(Sensor sensor) {
-        this.sensor = sensor;
+    Alarm(PsiChecker psiChecker) {
+        this.psiChecker = psiChecker;
     }
 
     public void check() {
-        this.switchedOn = isBelowPressure(sensor) || isOverPressure(sensor);
+        this.switchedOn = isBelowPressure(psiChecker) || isOverPressure(psiChecker);
     }
 
     public boolean isAlarmOn() {
         return switchedOn;
     }
 
-    private boolean isBelowPressure(Sensor sensor) {
-        return sensor.popNextPressurePsiValue() < LOW_PRESSURE_THRESHOLD;
+    private boolean isBelowPressure(PsiChecker psiChecker) {
+        return psiChecker.popNextPressurePsiValue() < LOW_PRESSURE_THRESHOLD;
     }
 
-    private boolean isOverPressure(Sensor sensor) {
-        return sensor.popNextPressurePsiValue() > HIGH_PRESSURE_THRESHOLD;
+    private boolean isOverPressure(PsiChecker psiChecker) {
+        return psiChecker.popNextPressurePsiValue() > HIGH_PRESSURE_THRESHOLD;
     }
 
 }
