@@ -1,24 +1,15 @@
-package tddmicroexercises.telemetrysystem;
+package tddmicroexercises.telemetrysystem.impl;
 
 import java.util.Random;
 
+import tddmicroexercises.telemetrysystem.TelemetryClientConnector;
 import tddmicroexercises.telemetrysystem.library.TelemetryClient;
 
-public class AwakeTelemetryClient implements TelemetryClient {
+public class AwakeTelemetryClient implements TelemetryClientConnector {
 
     private String diagnosticMessageResult = "";
 
     private final Random connectionEventsSimulator = new Random(42);
-
-    @Override
-    public void connect() {
-        throw new UnsupportedOperationException("Not implemented");
-    }
-
-    @Override
-    public void disconnect() {
-        throw new UnsupportedOperationException("Not implemented");
-    }
 
     @Override
     public void send(String message) {
@@ -29,7 +20,7 @@ public class AwakeTelemetryClient implements TelemetryClient {
             throw new IllegalArgumentException();
         }
 
-        if (message.equals(DIAGNOSTIC_MESSAGE)) {
+        if (message.equals(TelemetryClient.DIAGNOSTIC_MESSAGE)) {
             // simulate a status report
             diagnosticMessageResult = "LAST TX rate................ 100 MBPS\r\n"
                     + "HIGHEST TX rate............. 100 MBPS\r\n"

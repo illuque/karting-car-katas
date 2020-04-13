@@ -1,15 +1,14 @@
 package tddmicroexercises.telemetrysystem;
 
-import tddmicroexercises.telemetrysystem.library.SleepTelemetryClient;
 import tddmicroexercises.telemetrysystem.library.TelemetryClient;
 
 public class TelemetryDiagnosticControls {
 
-    private final TelemetryClient telemetryClient;
+    private final TelemetryClientConnector telemetryConnector;
     private String diagnosticInfo = "";
 
-    public TelemetryDiagnosticControls(TelemetryClient telemetryClient) {
-        this.telemetryClient = telemetryClient;
+    public TelemetryDiagnosticControls(TelemetryClientConnector telemetryConnector) {
+        this.telemetryConnector = telemetryConnector;
     }
 
     public String getDiagnosticInfo() {
@@ -19,12 +18,7 @@ public class TelemetryDiagnosticControls {
     public void checkTransmission() throws Exception {
         diagnosticInfo = "";
 
-        if (telemetryClient instanceof SleepTelemetryClient) {
-            telemetryClient.disconnect();
-            telemetryClient.connect();
-        }
-
-        telemetryClient.send(TelemetryClient.DIAGNOSTIC_MESSAGE);
-        diagnosticInfo = telemetryClient.receive();
+        telemetryConnector.send(TelemetryClient.DIAGNOSTIC_MESSAGE);
+        diagnosticInfo = telemetryConnector.receive();
     }
 }

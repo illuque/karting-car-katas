@@ -3,64 +3,42 @@ package tddmicroexercises.telemetrysystem;
 import org.junit.Assert;
 import org.junit.Test;
 
+import tddmicroexercises.telemetrysystem.impl.AwakeTelemetryClient;
+import tddmicroexercises.telemetrysystem.impl.SleepTelemetryClientWrapper;
 import tddmicroexercises.telemetrysystem.library.SleepTelemetryClient;
 
 public class TelemetryDiagnosticControlsTest {
 
-    private static class SleepTelemetryClientStubSpy extends SleepTelemetryClient {
+    private static class SleepTelemetryClientStubSpy extends SleepTelemetryClientWrapper {
 
-        private int connectCounter = 0;
-        private int disconnectCounter = 0;
+        public SleepTelemetryClientStubSpy(SleepTelemetryClient sleepTelemetryClient) {
+            super(sleepTelemetryClient);
+        }
 
         @Override
         public String receive() {
             return "SleepTelemetryClientStubSpy Result";
         }
 
-        @Override
-        public void connect() {
-            this.connectCounter++;
-        }
-
-        @Override
-        public void disconnect() {
-            this.disconnectCounter++;
-        }
-
     }
 
     private static class AwakeTelemetryClientStubSpy extends AwakeTelemetryClient {
-
-        private int connectCounter = 0;
-        private int disconnectCounter = 0;
 
         @Override
         public String receive() {
             return "AwakeTelemetryClientStubSpy Result";
         }
 
-        @Override
-        public void connect() {
-            this.connectCounter++;
-        }
-
-        @Override
-        public void disconnect() {
-            this.disconnectCounter++;
-        }
-
     }
 
     @Test
     public void whenSleepTelemetryClient_thenDisconnectConnectAndReturnDiagnosisInfo() throws Exception {
-        SleepTelemetryClientStubSpy sleepTelemetryClientStubSpy = new SleepTelemetryClientStubSpy();
+        SleepTelemetryClientStubSpy sleepTelemetryClientStubSpy = new SleepTelemetryClientStubSpy(new SleepTelemetryClient());
 
         TelemetryDiagnosticControls telemetryDiagnosticControls = new TelemetryDiagnosticControls(sleepTelemetryClientStubSpy);
         telemetryDiagnosticControls.checkTransmission();
 
         Assert.assertEquals("SleepTelemetryClientStubSpy Result", telemetryDiagnosticControls.getDiagnosticInfo());
-        Assert.assertEquals(1, sleepTelemetryClientStubSpy.connectCounter);
-        Assert.assertEquals(1, sleepTelemetryClientStubSpy.disconnectCounter);
     }
 
     @Test
@@ -71,13 +49,11 @@ public class TelemetryDiagnosticControlsTest {
         telemetryDiagnosticControls.checkTransmission();
 
         Assert.assertEquals("AwakeTelemetryClientStubSpy Result", telemetryDiagnosticControls.getDiagnosticInfo());
-        Assert.assertEquals(0, awakeTelemetryClientStubSpy.connectCounter);
-        Assert.assertEquals(0, awakeTelemetryClientStubSpy.disconnectCounter);
     }
 
     @Test
     public void whenCheckNotCalled_thenEmptyDiagnosisInfo() {
-        SleepTelemetryClientStubSpy sleepTelemetryClientStubSpy = new SleepTelemetryClientStubSpy();
+        SleepTelemetryClientStubSpy sleepTelemetryClientStubSpy = new SleepTelemetryClientStubSpy(new SleepTelemetryClient());
 
         TelemetryDiagnosticControls telemetryDiagnosticControls = new TelemetryDiagnosticControls(sleepTelemetryClientStubSpy);
 
