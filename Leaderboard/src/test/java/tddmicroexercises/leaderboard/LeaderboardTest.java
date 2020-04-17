@@ -27,6 +27,18 @@ public class LeaderboardTest {
     }
 
     @Test
+    public void driverResults_whenSelfDrivingCarInRanking_shouldSumAllRacesPointsForDriver() {
+        // setup
+
+        // act
+        Map<String, Integer> results = TestData.sampleLeaderboard2.driverResults();
+
+        // verify
+        assertTrue("results " + results, results.containsKey("1.2"));
+        assertEquals(15 + 25 + 15, (int) results.get("1.2"));
+    }
+
+    @Test
     public void driverRankings_shouldSortDriversByPoints() {
         // setup
 
@@ -37,6 +49,19 @@ public class LeaderboardTest {
         assertEquals("Lewis Hamilton", result.get(0));
         assertEquals("Nico Rosberg", result.get(1));
         assertEquals("Sebastian Vettel", result.get(2));
+    }
+
+    @Test
+    public void driverRankings_whenSelfDrivingCarInRanking_shouldSortDriversByPoints() {
+        // setup
+
+        // act
+        List<String> result = TestData.sampleLeaderboard2.driverRankings();
+
+        // verify
+        assertEquals("Lewis Hamilton", result.get(0));
+        assertEquals("Nico Rosberg", result.get(1));
+        assertEquals("1.2", result.get(2));
     }
 
     @Test
