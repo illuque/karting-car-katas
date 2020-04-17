@@ -1,5 +1,8 @@
 package tddmicroexercises.leaderboard;
 
+import tddmicroexercises.impl.Driver;
+import tddmicroexercises.impl.SelfDrivingCar;
+
 public class TestData {
 
     public static Driver driver1;

@@ -34,8 +34,8 @@ public class LeaderboardTest {
         Map<String, Integer> results = TestData.sampleLeaderboard2.driverResults();
 
         // verify
-        assertTrue("results " + results, results.containsKey("1.2"));
-        assertEquals(15 + 25 + 15, (int) results.get("1.2"));
+        assertTrue("results " + results, results.containsKey("Self Driving Car - Acme - 1.3"));
+        assertEquals(15 + 25 + 15, (int) results.get("Self Driving Car - Acme - 1.3"));
     }
 
     @Test
@@ -61,7 +61,7 @@ public class LeaderboardTest {
         // verify
         assertEquals("Lewis Hamilton", result.get(0));
         assertEquals("Nico Rosberg", result.get(1));
-        assertEquals("1.2", result.get(2));
+        assertEquals("Self Driving Car - Acme - 1.3", result.get(2));
     }
 
     @Test
